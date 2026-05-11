@@ -28,9 +28,8 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Pitaj za commit poruku
-set /p commit_msg="Unesite poruku za commit (pritisnite Enter za default): "
-if "%commit_msg%"=="" set commit_msg=Auto sync %date% %time%
+:: Automatski napravi commit poruku
+set commit_msg=Auto sync %date% %time%
 
 :: Napravi commit
 echo.
