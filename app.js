@@ -908,36 +908,41 @@ const app = {
             <tr class="bg-slate-100 border-b-2 border-slate-200">
                 <td class="p-4 font-black text-slate-900 text-lg">
                     <div class="flex items-center gap-3">
-                        <i data-lucide="${chapter.icon || 'book'}" class="w-5 h-5 text-blue-600"></i>
-                        ${chapter.title}
+                        <i data-lucide="${chapter.icon || 'book'}" class="w-5 h-5 text-blue-600 flex-shrink-0"></i>
+                        <span class="truncate">${chapter.title}</span>
                     </div>
                 </td>
-                <td class="p-4 text-slate-500 font-bold">Poglavlje ${cIndex + 1}</td>
+                <td class="p-4 text-slate-500 font-bold whitespace-nowrap">Poglavlje ${cIndex + 1}</td>
                 <td class="p-4 text-right">
-                    <button onclick="app.editChapter(${cIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg" title="Uredi poglavlje"><i data-lucide="settings" class="w-5 h-5"></i></button>
-                    <button onclick="app.deleteChapter(${cIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg" title="Obriši poglavlje"><i data-lucide="trash" class="w-5 h-5"></i></button>
+                    <div class="flex gap-1 justify-end">
+                        <button onclick="app.editChapter(${cIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all" title="Uredi poglavlje"><i data-lucide="settings" class="w-5 h-5"></i></button>
+                        <button onclick="app.deleteChapter(${cIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg transition-all" title="Obriši poglavlje"><i data-lucide="trash" class="w-5 h-5"></i></button>
+                    </div>
                 </td>
             </tr>
             ${chapter.lessons.map((lesson, lIndex) => `
                 <tr class="border-b border-slate-100 hover:bg-slate-50 transition-all">
                     <td class="py-4 px-8 font-medium text-slate-700">
                         <div class="flex items-center gap-2">
-                            <span class="text-slate-300">└</span>
-                            ${lesson.title}
+                            <span class="text-slate-300 flex-shrink-0">└</span>
+                            <span class="truncate">${lesson.title}</span>
                         </div>
                     </td>
-                    <td class="py-4 px-6 text-slate-400 text-xs">Lekcija ${lIndex + 1}</td>
+                    <td class="py-4 px-6 text-slate-400 text-xs whitespace-nowrap">Lekcija ${lIndex + 1}</td>
                     <td class="py-4 px-6 text-right">
-                        <button onclick="app.editLesson(${cIndex}, ${lIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg" title="Uredi lekciju"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                        <button onclick="app.deleteLesson(${cIndex}, ${lIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg" title="Obriši lekciju"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        <div class="flex gap-1 justify-end">
+                            <button onclick="app.editLesson(${cIndex}, ${lIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all" title="Uredi lekciju"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                            <button onclick="app.deleteLesson(${cIndex}, ${lIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg transition-all" title="Obriši lekciju"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
                     </td>
                 </tr>
             `).join('')}
             <tr>
                 <td colspan="3" class="p-4 pl-12">
-                    <button onclick="app.addNewLesson(${cIndex})" class="text-green-600 font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:text-green-700">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        Dodaj lekciju u ovo poglavlje
+                    <button onclick="app.addNewLesson(${cIndex})" class="text-green-600 font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:text-green-700 transition-all">
+                        <i data-lucide="plus-circle" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="hidden sm:inline">Dodaj lekciju u ovo poglavlje</span>
+                        <span class="sm:hidden">Dodaj lekciju</span>
                     </button>
                 </td>
             </tr>
@@ -1284,24 +1289,26 @@ const app = {
         }
 
         container.innerHTML = this.pendingStudents.map(student => `
-            <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-300 transition-all gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
                     </div>
-                    <div>
-                        <div class="font-bold text-slate-900">${student.email}</div>
-                        <div class="text-sm text-slate-500">Poslato: ${new Date(student.timestamp).toLocaleString('sr-RS')}</div>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-bold text-slate-900 text-sm sm:text-base truncate">${student.email}</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Poslato: ${new Date(student.timestamp).toLocaleString('sr-RS')}</div>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="app.approveStudent('${student.id}')" class="px-4 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition-all flex items-center gap-2">
-                        <i data-lucide="check" class="w-4 h-4"></i>
-                        Odobri
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="app.approveStudent('${student.id}')" class="flex-1 sm:flex-none px-3 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition-all flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="check" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="hidden sm:inline">Odobri</span>
+                        <span class="sm:hidden">✓</span>
                     </button>
-                    <button onclick="app.rejectStudent('${student.id}')" class="px-4 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all flex items-center gap-2">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                        Odbij
+                    <button onclick="app.rejectStudent('${student.id}')" class="flex-1 sm:flex-none px-3 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="x" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="hidden sm:inline">Odbij</span>
+                        <span class="sm:hidden">✕</span>
                     </button>
                 </div>
             </div>
@@ -1320,21 +1327,22 @@ const app = {
         }
 
         container.innerHTML = approvedStudents.map(student => `
-            <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-green-200 hover:border-green-300 transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-xl border border-green-200 hover:border-green-300 transition-all gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <i data-lucide="user-check" class="w-5 h-5 text-green-600"></i>
                     </div>
-                    <div>
-                        <div class="font-bold text-slate-900">${student.email}</div>
-                        <div class="text-sm text-slate-500">Odobreno: ${new Date(student.approvedAt).toLocaleString('sr-RS')}</div>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-bold text-slate-900 text-sm sm:text-base truncate">${student.email}</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Odobreno: ${new Date(student.approvedAt).toLocaleString('sr-RS')}</div>
                         <div class="text-xs text-green-600 font-medium">Lozinka: ${student.password}</div>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="app.revokeAccess('${student.id}')" class="px-4 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all flex items-center gap-2">
-                        <i data-lucide="ban" class="w-4 h-4"></i>
-                        Ukloni pristup
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="app.revokeAccess('${student.id}')" class="flex-1 sm:flex-none px-3 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="ban" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="hidden sm:inline">Ukloni pristup</span>
+                        <span class="sm:hidden">Ukloni</span>
                     </button>
                 </div>
             </div>
