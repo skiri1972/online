@@ -1257,8 +1257,10 @@ const app = {
                         <i data-lucide="user-check" class="w-4 h-4"></i>
                         <span class="text-sm font-medium">${this.currentUser.email}</span>
                     </div>
-                    <button onclick="app.logout()" class="text-red-500 hover:text-red-700 font-bold text-sm px-3 py-1 rounded-lg transition-all hover:bg-red-50">
-                                                <span class="hidden sm:inline">Odjavi se</span>
+                    <button onclick="app.logout()" class="text-red-500 hover:text-red-700 font-bold text-sm px-3 py-2 rounded-lg transition-all hover:bg-red-50 flex items-center gap-2 min-h-[44px]">
+                        <i data-lucide="log-out" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="hidden sm:inline">Odjavi se</span>
+                        <span class="sm:hidden">Odjavi</span>
                     </button>
                 </div>
             `;
