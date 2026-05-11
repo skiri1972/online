@@ -1252,26 +1252,22 @@ const app = {
                         <i data-lucide="user-check" class="w-4 h-4"></i>
                         <span class="text-sm font-medium">${this.currentUser.email}</span>
                     </div>
-                    <button onclick="app.logout()" class="text-red-500 hover:text-red-700 font-bold text-xs px-2 py-1 rounded-lg transition-all hover:bg-red-50 flex items-center gap-1">
-                        <i data-lucide="log-out" class="w-3 h-3"></i>
-                        <span class="hidden sm:inline">Odjavi se</span>
-                        <span class="sm:hidden">Odjava</span>
+                    <button onclick="app.logout()" class="text-red-500 hover:text-red-700 font-bold text-sm px-3 py-1 rounded-lg transition-all hover:bg-red-50">
+                                                <span class="hidden sm:inline">Odjavi se</span>
                     </button>
                 </div>
             `;
         } else {
             // User is not logged in
             authSection.innerHTML = `
-                <button onclick="app.showView('student-login')" class="text-slate-500 hover:text-blue-600 font-bold text-xs px-2 py-1 rounded-lg transition-all hover:bg-blue-50 flex items-center gap-1">
-                        <i data-lucide="user-plus" class="w-3 h-3"></i>
-                        <span class="hidden sm:inline">Učenik</span>
-                        <span class="sm:hidden">Prijava</span>
-                    </button>
-                <button onclick="app.showView('teacher')" class="text-slate-500 hover:text-blue-600 font-bold text-xs px-2 py-1 rounded-lg transition-all hover:bg-blue-50 flex items-center gap-1">
-                        <i data-lucide="user-cog" class="w-3 h-3"></i>
-                        <span class="hidden sm:inline">Nastavnik</span>
-                        <span class="sm:hidden">Panel</span>
-                    </button>
+                <button onclick="app.showView('student-login')" class="text-slate-500 hover:text-blue-600 font-bold px-4 py-2 rounded-xl transition-all hover:bg-blue-50">
+                    <span class="hidden sm:inline">Učenik</span>
+                    <i data-lucide="user" class="sm:hidden"></i>
+                </button>
+                <button onclick="app.showView('teacher')" class="text-slate-500 hover:text-blue-600 font-bold px-4 py-2 rounded-xl transition-all hover:bg-blue-50">
+                    <span class="hidden sm:inline">Nastavnik</span>
+                    <i data-lucide="user-cog" class="sm:hidden"></i>
+                </button>
             `;
         }
         lucide.createIcons();
