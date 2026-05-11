@@ -101,7 +101,7 @@ const app = {
 
     showView(viewName) {
         if (viewName === 'teacher') {
-            const pass = prompt('Unesite lozinku za nastavnika (podrazumevano: nastavnik123):', 'nastavnik123');
+            const pass = prompt('Unesite lozinku za nastavnika:');
             if (pass !== 'nastavnik123') {
                 alert('Pogrešna lozinka!');
                 return;
