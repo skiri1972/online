@@ -30,17 +30,51 @@ const app = {
         }
     },
 
-    async loadData() {
+    loadData() {
         try {
-            // Use SyncConfig to load data
-            const data = await SyncConfig.initializeData();
-            
-            this.chapters = data.chapters || [];
-            this.progress = data.progress || {};
-            this.pendingStudents = data.pendingStudents || [];
-            this.approvedStudents = data.approvedStudents || [];
+            const cacheVersion = localStorage.getItem('uz_cache_version');
+            if (cacheVersion !== '4.1') {
+                localStorage.clear();
+                localStorage.setItem('uz_cache_version', '4.1');
+            }
 
-            console.log(`UčimZnam: Podaci učitani iz ${SyncConfig.getDataSource()}`);
+            // Load chapters
+            const savedChapters = localStorage.getItem('uz_chapters');
+            if (savedChapters) {
+                this.chapters = JSON.parse(savedChapters);
+            } else {
+                this.chapters = initialChapters;
+                this.saveData();
+            }
+
+            // Load progress
+            const savedProgress = localStorage.getItem('uz_progress');
+            if (savedProgress) {
+                this.progress = JSON.parse(savedProgress);
+            } else {
+                this.progress = {};
+                this.saveData();
+            }
+
+            // Load pending students
+            const savedPendingStudents = localStorage.getItem('uz_pending_students');
+            if (savedPendingStudents) {
+                this.pendingStudents = JSON.parse(savedPendingStudents);
+            } else {
+                this.pendingStudents = [];
+                this.saveData();
+            }
+
+            // Load approved students (permanent storage)
+            const savedApprovedStudents = localStorage.getItem('approved_students_permanent');
+            if (savedApprovedStudents) {
+                this.approvedStudents = JSON.parse(savedApprovedStudents);
+            } else {
+                this.approvedStudents = [];
+                this.saveApprovedStudents([]);
+            }
+
+            console.log('UčimZnam: Podaci uspešno učitani');
         } catch (error) {
             console.error('UčimZnam: Greška pri učitavanju podataka:', error);
             this.chapters = initialChapters;
@@ -50,15 +84,18 @@ const app = {
         }
     },
 
-    async saveData() {
+    saveData() {
         try {
-            // Use SyncConfig to save data
-            await SyncConfig.saveData('chapters', this.chapters);
-            await SyncConfig.saveData('progress', this.progress);
-            await SyncConfig.saveData('pendingStudents', this.pendingStudents);
-            console.log(`UčimZnam: Podaci sačuvani u ${SyncConfig.getDataSource()}`);
-        } catch (error) {
-            console.error('UčimZnam: Greška pri čuvanju podataka:', error);
+            localStorage.setItem('uz_chapters', JSON.stringify(this.chapters));
+            localStorage.setItem('uz_progress', JSON.stringify(this.progress));
+            localStorage.setItem('uz_pending_students', JSON.stringify(this.pendingStudents));
+            return true;
+        } catch (e) {
+            console.error('Greška pri čuvanju podataka:', e);
+            if (e.name === 'QuotaExceededError') {
+                alert('Greška: Memorija pretraživača je puna!');
+            }
+            return false;
         }
     },
 
@@ -90,12 +127,12 @@ const app = {
     },
 
     isAuthenticated() {
-        return SyncConfig.isAuthenticated();
+        return this.currentUser !== null;
     },
 
     logout() {
-        SyncConfig.logout();
         this.currentUser = null;
+        localStorage.removeItem('current_user');
         this.showView('student-login');
         this.showLoginMessage('Uspešno ste odjavljeni.', 'info');
         this.updateAuthUI(); // Update navigation after logout
