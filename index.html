@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UčimZnam - Informatika</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Modernized Lesson Content */
+        .lesson-content h1 { @apply text-5xl font-black mb-10 text-slate-900 tracking-tight text-center block w-full border-b-0 pb-0; }
+        .lesson-content h1::after { content: ""; @apply block w-24 h-2 bg-blue-600 rounded-full mx-auto mt-6; }
+        
+        .lesson-content h2 { @apply text-3xl font-extrabold mb-6 mt-16 text-slate-800 flex items-center justify-center gap-4 text-center w-full; }
+        .lesson-content h2::before, .lesson-content h2::after { content: ""; @apply w-12 h-1 bg-slate-200 rounded-full inline-block; }
+        
+        .lesson-content p { @apply text-xl text-slate-600 mb-8 leading-loose font-normal text-justify; }
+        .lesson-content ul { @apply space-y-4 mb-10 text-slate-600; }
+        .lesson-content li { @apply flex items-start gap-4 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-300 hover:shadow-md text-lg; }
+        .lesson-content li::before { content: "✦"; @apply text-blue-500 font-bold text-xl; }
+        
+        .lesson-content code { @apply bg-blue-100 px-3 py-1 rounded-lg text-blue-800 font-mono text-base font-bold; }
+        .lesson-content img { @apply rounded-[2.5rem] shadow-2xl my-12 w-full object-cover max-h-[600px] border-[12px] border-white ring-1 ring-slate-100; }
+        
+        /* Modern Info Boxes */
+        .info-box { @apply bg-blue-50 border-l-[12px] border-blue-500 p-8 rounded-3xl my-10 text-blue-900 font-semibold text-lg flex gap-6 items-center shadow-md; }
+        .tip-box { @apply bg-amber-50 border-l-[12px] border-amber-500 p-8 rounded-3xl my-10 text-amber-900 font-semibold text-lg flex gap-6 items-center shadow-md; }
+        
+        /* Simplified Quiz Styles - Book Style */
+        .quiz-option { @apply w-full text-left py-4 pl-0 pr-2 rounded-xl transition-all mb-2 flex items-start gap-2 font-medium text-slate-700 hover:bg-slate-100 relative; min-height: 2.5rem; }
+        .quiz-option.selected { @apply bg-blue-50 text-blue-900 font-bold; }
+        .quiz-option.correct { @apply text-green-600 font-bold; }
+        .quiz-option.incorrect { @apply text-red-600 font-bold; }
+        
+        .quiz-number { @apply font-black shrink-0 text-slate-900 w-6 text-left; }
+        .quiz-option span.flex-1 { @apply text-slate-800 leading-snug; }
+
+        .progress-bar { transition: width 0.5s ease-in-out; }
+        
+        /* iPhone 11 and Mobile Responsive Fixes */
+        @media (max-width: 414px) {
+            /* Navigation fixes */
+            .nav-brand-text { font-size: 1.125rem !important; }
+            .nav-version-text { font-size: 7px !important; }
+            .progress-text { font-size: 9px !important; }
+            
+            /* Header layout fixes */
+            nav { height: auto !important; }
+            .nav-container { padding: 0.5rem 1rem !important; }
+            .nav-brand-icon { padding: 0.5rem !important; }
+            .nav-brand-gap { gap: 0.5rem !important; }
+            .nav-right-gap { gap: 0.5rem !important; }
+            .progress-indicator { padding: 0.25rem 0.5rem !important; }
+            .nav-divider { width: 1px !important; height: 1.5rem !important; }
+            
+            /* Hero section fixes */
+            .hero-title { font-size: 2.5rem !important; line-height: 1.2 !important; }
+            .hero-subtitle { font-size: 1.125rem !important; }
+            .hero-badge { font-size: 10px !important; padding: 0.5rem 0.75rem !important; }
+            
+            /* Lesson content fixes */
+            .lesson-content h1 { font-size: 2.5rem !important; }
+            .lesson-content h2 { font-size: 1.875rem !important; }
+            .lesson-content p { font-size: 1rem !important; }
+            .lesson-content li { font-size: 0.875rem !important; padding: 1rem !important; }
+            
+            /* Grid fixes */
+            .lessons-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+            
+            /* Card fixes */
+            .chapter-card { padding: 1.5rem !important; }
+            .chapter-title { font-size: 1.25rem !important; }
+            
+            /* Sidebar fixes */
+            .lesson-sidebar { width: 100% !important; margin-bottom: 1rem !important; }
+            .lesson-content { flex-direction: column !important; }
+            
+            /* Modal fixes */
+            .modal-content { padding: 1rem !important; margin: 1rem !important; }
+            .quiz-option { padding: 0.75rem !important; font-size: 0.875rem !important; }
+            
+            /* Quiz Modal Mobile Fixes */
+            .quiz-modal-container { 
+                margin: 0.5rem !important; 
+                max-height: 95vh !important; 
+                border-radius: 1.5rem !important; 
+            }
+            .quiz-header { 
+                padding: 1rem !important; 
+                flex-direction: column !important; 
+                gap: 1rem !important; 
+                text-align: center !important; 
+            }
+            .quiz-title { font-size: 1.25rem !important; }
+            .quiz-progress { font-size: 0.75rem !important; padding: 0.5rem 1rem !important; }
+            .quiz-content { padding: 1rem !important; }
+            .quiz-question { font-size: 1.25rem !important; margin-bottom: 1rem !important; }
+            .quiz-result-icon { width: 3rem !important; height: 3rem !important; }
+            .quiz-result-title { font-size: 1.5rem !important; }
+            .quiz-result-text { font-size: 1rem !important; margin-bottom: 1rem !important; }
+            .quiz-continue-btn { padding: 0.75rem !important; font-size: 1rem !important; }
+            
+            /* Edit Modal Mobile Fixes */
+            .edit-modal-container { 
+                margin: 0.5rem !important; 
+                max-height: 95vh !important; 
+                border-radius: 1.5rem !important; 
+            }
+            .edit-modal-header { 
+                padding: 1rem !important; 
+                flex-direction: column !important; 
+                gap: 1rem !important; 
+                text-align: center !important; 
+            }
+            .edit-modal-title { font-size: 1.25rem !important; }
+            .edit-modal-close { width: 2rem !important; height: 2rem !important; }
+            .edit-modal-content { padding: 1rem !important; }
+            .edit-form-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+            .edit-form-label { font-size: 0.75rem !important; margin-bottom: 0.5rem !important; }
+            .edit-form-input { padding: 0.75rem !important; font-size: 1rem !important; }
+            .edit-form-textarea { padding: 0.75rem !important; font-size: 1rem !important; }
+            .edit-modal-footer { 
+                padding: 1rem !important; 
+                flex-direction: column !important; 
+                gap: 0.5rem !important; 
+            }
+            .edit-modal-btn { 
+                padding: 0.75rem 1rem !important; 
+                font-size: 0.875rem !important; 
+                width: 100% !important; 
+            }
+            
+            /* Student Login View Mobile Fixes */
+            .login-container { 
+                margin: 0.5rem !important; 
+                padding: 1rem !important; 
+                border-radius: 1.5rem !important; 
+            }
+            .login-header { padding: 1rem !important; }
+            .login-icon { 
+                width: 4rem !important; 
+                height: 4rem !important; 
+                margin-bottom: 1rem !important; 
+            }
+            .login-title { font-size: 1.5rem !important; }
+            .login-subtitle { font-size: 1rem !important; margin-bottom: 1rem !important; }
+            .login-tabs { padding: 0.25rem !important; margin-bottom: 1rem !important; }
+            .login-tab-btn { 
+                padding: 0.5rem !important; 
+                font-size: 0.75rem !important; 
+            }
+            .login-form-label { 
+                font-size: 0.75rem !important; 
+                margin-bottom: 0.5rem !important; 
+            }
+            .login-form-input { 
+                padding: 0.75rem !important; 
+                font-size: 1rem !important; 
+            }
+            .login-submit-btn { 
+                padding: 0.75rem !important; 
+                font-size: 1rem !important; 
+            }
+            .login-message { 
+                padding: 0.75rem !important; 
+                font-size: 0.875rem !important; 
+                margin-top: 1rem !important; 
+            }
+            
+            /* Teacher Panel Mobile Fixes */
+            .teacher-container { 
+                margin: 0.5rem !important; 
+                padding: 1rem !important; 
+                border-radius: 1.5rem !important; 
+            }
+            .teacher-header { 
+                padding: 1rem !important; 
+                flex-direction: column !important; 
+                gap: 1rem !important; 
+                text-align: center !important; 
+            }
+            .teacher-title { font-size: 1.5rem !important; }
+            .teacher-section { margin-bottom: 1.5rem !important; }
+            .teacher-section-title { 
+                font-size: 1.25rem !important; 
+                margin-bottom: 1rem !important; 
+            }
+            .teacher-table-container { 
+                overflow-x: auto !important; 
+                font-size: 0.75rem !important; 
+            }
+            .teacher-table { 
+                min-width: 600px !important; 
+            }
+            .teacher-table th { 
+                padding: 0.5rem !important; 
+                font-size: 0.625rem !important; 
+            }
+            .teacher-table td { 
+                padding: 0.5rem !important; 
+                font-size: 0.75rem !important; 
+            }
+            .teacher-btn { 
+                padding: 0.5rem 1rem !important; 
+                font-size: 0.75rem !important; 
+            }
+            .teacher-add-btn { 
+                padding: 0.75rem 1rem !important; 
+                font-size: 0.875rem !important; 
+            }
+            
+            /* Button fixes */
+            .btn-primary { padding: 0.75rem 1.5rem !important; font-size: 0.875rem !important; }
+            .btn-secondary { padding: 0.75rem 1.5rem !important; font-size: 0.875rem !important; }
+        }
+        
+        @media (max-width: 375px) {
+            .hero-title { font-size: 2rem !important; }
+            .lesson-content h1 { font-size: 2rem !important; }
+            .chapter-card { padding: 1rem !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 nav-container">
+            <div class="flex justify-between h-16 lg:h-20 items-center">
+                <div class="flex items-center gap-2 lg:gap-3 cursor-pointer nav-brand-gap" onclick="app.showView('home')">
+                    <div class="bg-blue-600 p-1.5 lg:p-2.5 rounded-xl text-white shadow-lg shadow-blue-200 nav-brand-icon">
+                        <i data-lucide="book-open" class="w-4 h-4 lg:w-5 lg:h-5"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl lg:text-2xl font-black text-slate-900 leading-none tracking-tight nav-brand-text">UčimZnam</span>
+                        <span class="text-[8px] lg:text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 nav-version-text">v3.1 Logos Edition</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 lg:gap-6 nav-right-gap">
+                    <div id="auth-section" class="flex items-center gap-2 lg:gap-4">
+                        <!-- Will be dynamically updated based on auth state -->
+                    </div>
+                    <div class="h-6 lg:h-8 w-[1.5px] lg:w-[2px] bg-slate-100 rounded-full nav-divider"></div>
+                    <div class="flex items-center gap-2 lg:gap-3 bg-slate-100/50 border border-slate-200/50 px-2 lg:px-4 py-1 lg:py-2 rounded-2xl progress-indicator">
+                        <div class="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-green-500 animate-pulse"></div>
+                        <span id="progress-text" class="text-xs lg:text-sm font-black text-slate-700 tracking-tight progress-text">0% Završeno</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- View: Home -->
+        <div id="view-home" class="view space-y-16">
+            <!-- Hero Section -->
+            <div class="relative rounded-[3rem] overflow-hidden bg-slate-900 text-white shadow-2xl shadow-blue-900/20">
+                <div class="absolute inset-0 opacity-40">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000" alt="Tech Background" class="w-full h-full object-cover scale-105">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
+                <div class="relative z-10 px-10 py-20 md:px-20 md:py-32 max-w-4xl">
+                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                        <div class="flex-1 text-center lg:text-left">
+                            <span class="inline-block px-5 py-2 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-black uppercase tracking-[0.2em] mb-6 inline-block hero-badge">Digitalna Avantura</span>
+                            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight hero-title">Savladaj informatiku kroz igru</h1>
+                            <p class="text-xl lg:text-2xl text-slate-300 mb-8 leading-relaxed max-w-2xl font-medium hero-subtitle">Nauči sve iz udžbenika za 5. razred uz interaktivne lekcije, slike i zabavne kvizove.</p>
+                            <div id="home-actions" class="flex gap-4 justify-center lg:justify-start flex-wrap">
+                                <!-- Actions will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-10">
+                <div class="flex items-end justify-between px-4">
+                    <div>
+                        <h2 class="text-4xl font-black text-slate-900 tracking-tight">Poglavlja kursa</h2>
+                        <p class="text-lg text-slate-500 mt-2 font-medium">Tvoj put do digitalnog majstora</p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-3 text-sm font-bold text-slate-400 bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-green-500"></i>
+                        Završi poglavlje za sledeći nivo
+                    </div>
+                </div>
+                
+                <div id="lessons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lessons-grid">
+                    <!-- Chapters or Lessons will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Lesson Detail -->
+        <div id="view-lesson" class="view hidden">
+            <div class="flex flex-col lg:flex-row gap-12 lesson-content">
+                <!-- Sidebar -->
+                <aside class="w-full lg:w-96 shrink-0 lesson-sidebar">
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden sticky top-28">
+                        <div class="p-8 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
+                            <div class="bg-blue-600 p-2 rounded-lg text-white">
+                                <i data-lucide="list" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-slate-900 tracking-tight">Tvoj napredak</h3>
+                        </div>
+                        <div id="lesson-sidebar-list" class="divide-y divide-slate-50">
+                            <!-- Sidebar items injected here -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Content -->
+                <div class="flex-1">
+                    <div class="bg-white rounded-[3rem] border border-slate-200 shadow-2xl shadow-slate-200/50 p-8 sm:p-16">
+                        <div id="lesson-content-area" class="lesson-content">
+                            <!-- Lesson content injected here -->
+                        </div>
+                        
+                        <div class="mt-16 pt-10 border-t border-slate-100 flex justify-between items-center">
+                            <button id="prev-lesson" class="flex items-center gap-3 text-slate-400 hover:text-slate-900 font-black transition-all text-lg group">
+                                <i data-lucide="chevron-left" class="group-hover:-translate-x-1 transition-transform"></i>
+                                Prethodna
+                            </button>
+                            <button id="complete-lesson" class="bg-blue-600 text-white px-10 py-4 rounded-[2rem] font-black hover:bg-blue-700 transition-all flex items-center gap-3 shadow-xl shadow-blue-200 text-lg">
+                                Proveri znanje
+                                <i data-lucide="check-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Student Login -->
+        <div id="view-student-login" class="view hidden">
+            <div class="max-w-md mx-auto">
+                <div class="bg-white rounded-[3rem] border border-slate-200 shadow-2xl shadow-slate-200/50 p-6 sm:p-12 login-container">
+                    <div class="text-center mb-6 sm:mb-8 login-header">
+                        <div class="bg-blue-600 p-3 sm:p-4 rounded-2xl text-white shadow-lg shadow-blue-200 w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center login-icon">
+                            <i data-lucide="user" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-2 login-title">Prijavi se</h2>
+                        <p class="text-slate-500 font-medium text-sm sm:text-base login-subtitle">Unesi svoje podatke za pristup</p>
+                    </div>
+                    
+                    <!-- Tab buttons -->
+                    <div class="flex bg-slate-100 rounded-xl p-0.5 sm:p-1 mb-4 sm:mb-6 login-tabs">
+                        <button type="button" id="login-tab" onclick="app.switchToLogin()" class="flex-1 py-2 sm:py-3 px-2 sm:px-4 rounded-lg font-black text-xs sm:text-sm transition-all bg-white text-blue-600 shadow-sm login-tab-btn">
+                            <i data-lucide="log-in" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
+                            Prijava
+                        </button>
+                        <button type="button" id="register-tab" onclick="app.switchToRegister()" class="flex-1 py-2 sm:py-3 px-2 sm:px-4 rounded-lg font-black text-xs sm:text-sm transition-all text-slate-500 hover:text-slate-700 login-tab-btn">
+                            <i data-lucide="user-plus" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
+                            Registracija
+                        </button>
+                    </div>
+                    
+                    <form onsubmit="app.handleStudentLogin(event)" class="space-y-4 sm:space-y-6">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 login-form-label">Email adresa</label>
+                            <input type="email" id="student-email" required placeholder="tvoj.email@skola.rs" class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-base sm:text-lg login-form-input">
+                        </div>
+                        
+                        <div id="password-field">
+                            <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 login-form-label">Lozinka</label>
+                            <input type="password" id="student-password" placeholder="Unesi lozinku" class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-base sm:text-lg login-form-input">
+                        </div>
+                        
+                        <button type="submit" id="login-button" class="w-full py-3 sm:py-5 bg-blue-600 text-white font-black rounded-[2rem] hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 login-submit-btn">
+                            <i data-lucide="log-in" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <span id="login-button-text">Prijavi se</span>
+                        </button>
+                        
+                                            </form>
+                    
+                    <div id="login-message" class="hidden mt-4 sm:mt-6 p-3 sm:p-4 rounded-2xl text-center font-medium login-message"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Teacher Panel -->
+        <div id="view-teacher" class="view hidden">
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-2xl p-4 sm:p-12 teacher-container">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-8 sm:mb-12 teacher-header">
+                    <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight teacher-title">Administracija</h2>
+                    <div class="flex gap-2 sm:gap-4">
+                        <button onclick="app.exportToWord()" class="text-blue-600 border border-blue-200 px-3 sm:px-6 py-2 sm:py-3 rounded-2xl font-bold hover:bg-blue-50 transition-all flex items-center gap-2 sm:gap-3 teacher-btn">
+                            <i data-lucide="file-text" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <span class="hidden sm:inline">Izvezi Word</span>
+                            <span class="sm:hidden">Word</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Student Requests Section -->
+                <div class="mb-8 sm:mb-12 teacher-section">
+                    <h3 class="text-lg sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center gap-3 teacher-section-title">
+                        <i data-lucide="users" class="text-blue-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                        Zahtevi za pristup
+                    </h3>
+                    <div class="bg-slate-50 rounded-2xl border-2 border-slate-100 p-4 sm:p-6">
+                        <div id="student-requests-container">
+                            <!-- Student requests will be injected here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Approved Students Section -->
+                <div class="mb-8 sm:mb-12 teacher-section">
+                    <h3 class="text-lg sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center gap-3 teacher-section-title">
+                        <i data-lucide="user-check" class="text-green-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                        Odobreni učenici
+                    </h3>
+                    <div class="bg-green-50 rounded-2xl border-2 border-green-100 p-4 sm:p-6">
+                        <div id="approved-students-container">
+                            <!-- Approved students will be injected here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto teacher-table-container">
+                    <table class="w-full text-left teacher-table">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-400 text-xs uppercase tracking-[0.2em]">
+                                <th class="pb-3 sm:pb-6 font-black">Naslov lekcije</th>
+                                <th class="pb-3 sm:pb-6 font-black">Redosled</th>
+                                <th class="pb-3 sm:pb-6 font-black">Akcije</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-lessons-table">
+                            <!-- Table rows injected here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Add Chapter Button -->
+                <div class="mt-6 sm:mt-8 flex justify-center">
+                    <button onclick="app.addNewChapter()" class="bg-blue-600 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all flex items-center gap-2 sm:gap-3 shadow-lg shadow-blue-100 teacher-add-btn">
+                        <i data-lucide="book-open" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        Novo poglavlje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Quiz -->
+    <div id="modal-quiz" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-[3rem] shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col border border-white/20 quiz-modal-container">
+            <div class="p-4 sm:p-8 border-b border-slate-100 flex justify-between items-center bg-blue-600 text-white quiz-header">
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <div class="bg-white/20 p-1.5 sm:p-2 rounded-xl">
+                        <i data-lucide="brain-circuit" class="w-4 h-4 sm:w-6 sm:h-6"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-2xl font-black tracking-tight quiz-title">Kviz provere znanja</h3>
+                </div>
+                <div id="quiz-progress" class="text-xs sm:text-sm font-black bg-white/20 px-2 sm:px-4 py-1 sm:py-2 rounded-full uppercase tracking-widest quiz-progress">Pitanje 1/3</div>
+            </div>
+            <div class="p-2 sm:p-4 sm:p-8 quiz-content">
+                <div id="quiz-question-container" class="text-left">
+                    <h4 id="quiz-question-text" class="text-lg sm:text-2xl font-black text-slate-900 mb-4 sm:mb-8 leading-tight quiz-question">Pitanje će biti ovde?</h4>
+                    <div id="quiz-options" class="flex flex-col items-start w-full">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+                
+                <div id="quiz-result-container" class="hidden text-center py-6 sm:py-12">
+                    <div id="quiz-result-icon" class="w-12 h-12 sm:w-24 sm:h-24 bg-green-100 text-green-600 rounded-[2rem] flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl shadow-green-100">
+                        <i data-lucide="award" class="w-6 h-6 sm:w-12 sm:h-12"></i>
+                    </div>
+                    <h4 id="quiz-result-title" class="text-2xl sm:text-4xl font-black text-slate-900 mb-2 sm:mb-4 tracking-tight quiz-result-title">Odličan posao!</h4>
+                    <p id="quiz-result-text" class="text-sm sm:text-xl text-slate-500 mb-6 sm:mb-12 font-medium quiz-result-text">Osvojili ste 3/3 poena i otključali sledeću lekciju.</p>
+                    <button id="quiz-continue-btn" onclick="app.closeQuiz()" class="w-full py-3 sm:py-5 bg-blue-600 text-white font-black rounded-[2rem] hover:bg-blue-700 transition-all shadow-2xl shadow-blue-200 text-base sm:text-xl quiz-continue-btn">Nastavi dalje</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Edit Lesson -->
+    <div id="modal-edit" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col edit-modal-container">
+            <div class="p-4 sm:p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50 edit-modal-header">
+                <h3 id="modal-title" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight edit-modal-title">Uredi lekciju</h3>
+                <button onclick="app.closeModal()" class="text-slate-400 hover:text-slate-600 transition-colors edit-modal-close">
+                    <i data-lucide="x" class="w-6 h-6 sm:w-8 sm:h-8"></i>
+                </button>
+            </div>
+            <div class="p-4 sm:p-10 overflow-y-auto flex-1 space-y-6 sm:space-y-10 edit-modal-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 edit-form-grid">
+                    <div>
+                        <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 edit-form-label">Naslov lekcije</label>
+                        <input type="text" id="edit-title" placeholder="npr. Osnovni pojmovi IKT" class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-base sm:text-lg edit-form-input">
+                    </div>
+                    <div>
+                        <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 edit-form-label">Kratak opis (za karticu)</label>
+                        <input type="text" id="edit-description" placeholder="npr. Uvod u svet računara..." class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-base sm:text-lg edit-form-input">
+                    </div>
+                </div>
+
+                <div class="space-y-4 sm:space-y-6 bg-slate-50 p-4 sm:p-8 rounded-[2rem] border-2 border-slate-100">
+                    <h4 class="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2">
+                        <i data-lucide="layout-template" class="text-blue-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                        Sadržaj lekcije
+                    </h4>
+                    
+                    <div>
+                        <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 edit-form-label">Tekst lekcije (Običan tekst)</label>
+                        <textarea id="edit-text-content" rows="4 sm:rows-6" placeholder="Ovde upišite glavni tekst lekcije..." class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 outline-none transition-all font-medium text-base sm:text-lg edit-form-textarea"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 edit-form-grid">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 edit-form-label flex items-center gap-2">
+                                <i data-lucide="video" class="w-3 h-3 sm:w-4 sm:h-4 text-red-500"></i>
+                                Video (YouTube link ili naziv fajla)
+                            </label>
+                            <div class="flex flex-col gap-2">
+                                <div id="video-status" class="hidden p-2 sm:p-3 bg-green-50 border border-green-200 rounded-xl flex items-center justify-between">
+                                    <span class="text-[8px] sm:text-[10px] font-black text-green-700 uppercase tracking-widest flex items-center gap-2">
+                                        <i data-lucide="check-circle" class="w-2 h-2 sm:w-3 sm:h-3"></i>
+                                        Fajl ubačen u memoriju
+                                    </span>
+                                    <button onclick="app.clearFile('edit-video-url', 'video-status')" class="text-red-500 hover:text-red-700 font-black text-[8px] sm:text-[10px] uppercase tracking-widest">Ukloni</button>
+                                </div>
+                                <input type="text" id="edit-video-url" placeholder="npr. https://youtube.com/... ili video1.mp4" class="w-full px-2 sm:px-4 py-1 sm:py-2 bg-white border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none transition-all text-[10px] sm:text-xs font-bold edit-form-input">
+                                <p class="text-[8px] sm:text-[9px] text-slate-400 font-medium">Savet: Samo upišite naziv fajla ako se nalazi u istom folderu kao i aplikacija.</p>
+                                <button onclick="document.getElementById('file-video').click()" class="w-full py-1.5 sm:py-2 bg-red-50 text-red-600 rounded-xl text-[8px] sm:text-[10px] font-black uppercase tracking-widest hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="file-search" class="w-2 h-2 sm:w-3 sm:h-3"></i>
+                                    Izaberi fajl sa diska
+                                </button>
+                                <input type="file" id="file-video" class="hidden" accept="video/*" onchange="app.handleFileUpload(this, 'edit-video-url', 'video-status')">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-2 sm:mb-3 edit-form-label flex items-center gap-2">
+                                <i data-lucide="file-text" class="w-3 h-3 sm:w-4 sm:h-4 text-orange-500"></i>
+                                PDF Dokument (Link ili naziv fajla)
+                            </label>
+                            <div class="flex flex-col gap-2">
+                                <div id="pdf-status" class="hidden p-2 sm:p-3 bg-green-50 border border-green-200 rounded-xl flex items-center justify-between">
+                                    <span class="text-[8px] sm:text-[10px] font-black text-green-700 uppercase tracking-widest flex items-center gap-2">
+                                        <i data-lucide="check-circle" class="w-2 h-2 sm:w-3 sm:h-3"></i>
+                                        Fajl ubačen u memoriju
+                                    </span>
+                                    <button onclick="app.clearFile('edit-pdf-url', 'pdf-status')" class="text-red-500 hover:text-red-700 font-black text-[8px] sm:text-[10px] uppercase tracking-widest">Ukloni</button>
+                                </div>
+                                <input type="text" id="edit-pdf-url" placeholder="npr. materijali/lekcija1.pdf" class="w-full px-2 sm:px-4 py-1 sm:py-2 bg-white border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none transition-all text-[10px] sm:text-xs font-bold edit-form-input">
+                                <p class="text-[8px] sm:text-[9px] text-slate-400 font-medium">Savet: Koristite Google Drive linkove za velike PDF fajlove.</p>
+                                <button onclick="document.getElementById('file-pdf').click()" class="w-full py-1.5 sm:py-2 bg-orange-50 text-orange-600 rounded-xl text-[8px] sm:text-[10px] font-black uppercase tracking-widest hover:bg-orange-100 transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="file-search" class="w-2 h-2 sm:w-3 sm:h-3"></i>
+                                    Izaberi fajl sa diska
+                                </button>
+                                <input type="file" id="file-pdf" class="hidden" accept="application/pdf" onchange="app.handleFileUpload(this, 'edit-pdf-url', 'pdf-status')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 sm:space-y-4">
+                    <label class="block text-xs sm:text-sm font-black text-slate-500 uppercase tracking-widest mb-1 sm:mb-2 edit-form-label">Ključne tačke (jedna po redu)</label>
+                    <textarea id="edit-key-points" rows="3 sm:rows-4" placeholder="Prva bitna stavka&#10;Druga bitna stavka..." class="w-full px-3 sm:px-6 py-2 sm:py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-bold text-base sm:text-lg edit-form-textarea"></textarea>
+                </div>
+
+                <div class="space-y-4 sm:space-y-6 bg-purple-50 p-4 sm:p-8 rounded-[2rem] border-2 border-purple-100">
+                    <h4 class="text-lg sm:text-xl font-black text-slate-800 flex items-center gap-2 mb-4 sm:mb-6">
+                        <i data-lucide="help-circle" class="text-purple-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                        Kviz pitanja
+                    </h4>
+                    
+                    <div id="quiz-questions-container" class="space-y-3 sm:space-y-4">
+                        <!-- Pitanja će se dinamički dodavati ovde -->
+                    </div>
+                    
+                    <button onclick="app.addQuizQuestion()" class="w-full py-2 sm:py-3 bg-purple-600 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="plus" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                        Dodaj pitanje za kviz
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8 border-t border-slate-100 bg-slate-50 flex justify-end gap-2 sm:gap-4 edit-modal-footer">
+                <button onclick="app.closeModal()" class="px-4 sm:px-8 py-2 sm:py-4 text-slate-500 font-black hover:bg-slate-200 rounded-2xl transition-all uppercase tracking-widest text-xs sm:text-sm edit-modal-btn">Odustani</button>
+                <button onclick="app.saveLesson()" class="px-6 sm:px-10 py-2 sm:py-4 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 uppercase tracking-widest text-xs sm:text-sm edit-modal-btn">Sačuvaj izmene</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="sync-config.js"></script>
+    <script src="api-client.js"></script>
+    <script src="lessons.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
