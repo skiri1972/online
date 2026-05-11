@@ -13,32 +13,191 @@
         }
         
         /* Modernized Lesson Content */
-        .lesson-content h1 { @apply text-5xl font-black mb-10 text-slate-900 tracking-tight text-center block w-full border-b-0 pb-0; }
-        .lesson-content h1::after { content: ""; @apply block w-24 h-2 bg-blue-600 rounded-full mx-auto mt-6; }
+        .lesson-content h1 { 
+            font-size: 3rem; 
+            font-weight: 900; 
+            margin-bottom: 2.5rem; 
+            color: rgb(15 23 42); 
+            letter-spacing: -0.025em; 
+            text-align: center; 
+            display: block; 
+            width: 100%; 
+            border-bottom: 0; 
+            padding-bottom: 0; 
+        }
+        .lesson-content h1::after { 
+            content: ""; 
+            display: block; 
+            width: 6rem; 
+            height: 0.5rem; 
+            background-color: rgb(59 130 246); 
+            border-radius: 9999px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            margin-top: 1.5rem; 
+        }
         
-        .lesson-content h2 { @apply text-3xl font-extrabold mb-6 mt-16 text-slate-800 flex items-center justify-center gap-4 text-center w-full; }
-        .lesson-content h2::before, .lesson-content h2::after { content: ""; @apply w-12 h-1 bg-slate-200 rounded-full inline-block; }
+        .lesson-content h2 { 
+            font-size: 1.875rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            margin-top: 4rem; 
+            color: rgb(30 41 59); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 1rem; 
+            text-align: center; 
+            width: 100%; 
+        }
+        .lesson-content h2::before, .lesson-content h2::after { 
+            content: ""; 
+            display: inline-block; 
+            width: 3rem; 
+            height: 0.25rem; 
+            background-color: rgb(226 232 240); 
+            border-radius: 9999px; 
+        }
         
-        .lesson-content p { @apply text-xl text-slate-600 mb-8 leading-loose font-normal text-justify; }
-        .lesson-content ul { @apply space-y-4 mb-10 text-slate-600; }
-        .lesson-content li { @apply flex items-start gap-4 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-300 hover:shadow-md text-lg; }
-        .lesson-content li::before { content: "✦"; @apply text-blue-500 font-bold text-xl; }
+        .lesson-content p { 
+            font-size: 1.25rem; 
+            color: rgb(71 85 105); 
+            margin-bottom: 2rem; 
+            line-height: 2; 
+            font-weight: 400; 
+            text-align: justify; 
+        }
+        .lesson-content ul { 
+            margin-top: 1rem; 
+            margin-bottom: 2.5rem; 
+            color: rgb(71 85 105); 
+        }
+        .lesson-content li { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 1rem; 
+            background-color: white; 
+            padding: 1.25rem; 
+            border-radius: 1rem; 
+            border: 1px solid rgb(226 232 240); 
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); 
+            transition: all 0.2s; 
+            font-size: 1.125rem; 
+        }
+        .lesson-content li:hover { 
+            border-color: rgb(147 197 253); 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); 
+        }
+        .lesson-content li::before { 
+            content: "✦"; 
+            color: rgb(59 130 246); 
+            font-weight: 900; 
+            font-size: 1.25rem; 
+        }
         
-        .lesson-content code { @apply bg-blue-100 px-3 py-1 rounded-lg text-blue-800 font-mono text-base font-bold; }
-        .lesson-content img { @apply rounded-[2.5rem] shadow-2xl my-12 w-full object-cover max-h-[600px] border-[12px] border-white ring-1 ring-slate-100; }
+        .lesson-content code { 
+            background-color: rgb(219 234 254); 
+            padding-left: 0.75rem; 
+            padding-right: 0.75rem; 
+            padding-top: 0.25rem; 
+            padding-bottom: 0.25rem; 
+            border-radius: 0.5rem; 
+            color: rgb(30 64 175); 
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace; 
+            font-size: 1rem; 
+            font-weight: 700; 
+        }
+        .lesson-content img { 
+            border-radius: 1.5rem; 
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); 
+            margin-top: 3rem; 
+            margin-bottom: 3rem; 
+            width: 100%; 
+            object-fit: cover; 
+            max-height: 600px; 
+            border: 12px solid white; 
+            box-shadow: 0 0 0 1px rgb(226 232 240); 
+        }
         
         /* Modern Info Boxes */
-        .info-box { @apply bg-blue-50 border-l-[12px] border-blue-500 p-8 rounded-3xl my-10 text-blue-900 font-semibold text-lg flex gap-6 items-center shadow-md; }
-        .tip-box { @apply bg-amber-50 border-l-[12px] border-amber-500 p-8 rounded-3xl my-10 text-amber-900 font-semibold text-lg flex gap-6 items-center shadow-md; }
+        .info-box { 
+            background-color: rgb(219 234 254); 
+            border-left: 12px solid rgb(59 130 246); 
+            padding: 2rem; 
+            border-radius: 1.5rem; 
+            margin-top: 2.5rem; 
+            margin-bottom: 2.5rem; 
+            color: rgb(30 58 138); 
+            font-weight: 600; 
+            font-size: 1.125rem; 
+            display: flex; 
+            gap: 1.5rem; 
+            align-items: center; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); 
+        }
+        .tip-box { 
+            background-color: rgb(254 243 199); 
+            border-left: 12px solid rgb(245 158 11); 
+            padding: 2rem; 
+            border-radius: 1.5rem; 
+            margin-top: 2.5rem; 
+            margin-bottom: 2.5rem; 
+            color: rgb(120 53 15); 
+            font-weight: 600; 
+            font-size: 1.125rem; 
+            display: flex; 
+            gap: 1.5rem; 
+            align-items: center; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); 
+        }
         
         /* Simplified Quiz Styles - Book Style */
-        .quiz-option { @apply w-full text-left py-4 pl-0 pr-2 rounded-xl transition-all mb-2 flex items-start gap-2 font-medium text-slate-700 hover:bg-slate-100 relative; min-height: 2.5rem; }
-        .quiz-option.selected { @apply bg-blue-50 text-blue-900 font-bold; }
-        .quiz-option.correct { @apply text-green-600 font-bold; }
-        .quiz-option.incorrect { @apply text-red-600 font-bold; }
+        .quiz-option { 
+            width: 100%; 
+            text-align: left; 
+            padding-top: 1rem; 
+            padding-bottom: 1rem; 
+            padding-left: 0; 
+            padding-right: 0.5rem; 
+            border-radius: 0.75rem; 
+            transition: all 0.2s; 
+            margin-bottom: 0.5rem; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 0.5rem; 
+            font-weight: 500; 
+            color: rgb(71 85 105); 
+            position: relative; 
+            min-height: 2.5rem; 
+        }
+        .quiz-option:hover { 
+            background-color: rgb(241 245 249); 
+        }
+        .quiz-option.selected { 
+            background-color: rgb(219 234 254); 
+            color: rgb(30 58 138); 
+            font-weight: 700; 
+        }
+        .quiz-option.correct { 
+            color: rgb(22 163 74); 
+            font-weight: 700; 
+        }
+        .quiz-option.incorrect { 
+            color: rgb(239 68 68); 
+            font-weight: 700; 
+        }
         
-        .quiz-number { @apply font-black shrink-0 text-slate-900 w-6 text-left; }
-        .quiz-option span.flex-1 { @apply text-slate-800 leading-snug; }
+        .quiz-number { 
+            font-weight: 900; 
+            flex-shrink: 0; 
+            color: rgb(15 23 42); 
+            width: 1.5rem; 
+            text-align: left; 
+        }
+        .quiz-option span.flex-1 { 
+            color: rgb(30 41 59); 
+            line-height: 1.4; 
+        }
 
         .progress-bar { transition: width 0.5s ease-in-out; }
         
