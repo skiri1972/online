@@ -906,38 +906,43 @@ const app = {
         const table = document.getElementById('teacher-lessons-table');
         table.innerHTML = this.chapters.map((chapter, cIndex) => `
             <tr class="bg-slate-100 border-b-2 border-slate-200">
-                <td class="p-4 font-black text-slate-900 text-lg">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="${chapter.icon || 'book'}" class="w-5 h-5 text-blue-600"></i>
+                <td class="p-2 sm:p-4 font-black text-slate-900 text-sm sm:text-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 teacher-chapter-title">
+                        <i data-lucide="${chapter.icon || 'book'}" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600"></i>
                         ${chapter.title}
                     </div>
                 </td>
-                <td class="p-4 text-slate-500 font-bold">Poglavlje ${cIndex + 1}</td>
-                <td class="p-4 text-right">
-                    <button onclick="app.editChapter(${cIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg" title="Uredi poglavlje"><i data-lucide="settings" class="w-5 h-5"></i></button>
-                    <button onclick="app.deleteChapter(${cIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg" title="Obriši poglavlje"><i data-lucide="trash" class="w-5 h-5"></i></button>
+                <td class="p-2 sm:p-4 text-slate-500 font-bold text-xs sm:text-sm">Poglavlje ${cIndex + 1}</td>
+                <td class="p-2 sm:p-4 text-right">
+                    <div class="teacher-actions">
+                        <button onclick="app.editChapter(${cIndex})" class="text-blue-600 p-1 sm:p-2 hover:bg-blue-50 rounded-lg teacher-action-btn" title="Uredi poglavlje"><i data-lucide="settings" class="w-4 h-4"></i></button>
+                        <button onclick="app.deleteChapter(${cIndex})" class="text-red-600 p-1 sm:p-2 hover:bg-red-50 rounded-lg teacher-action-btn" title="Obriši poglavlje"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                    </div>
                 </td>
             </tr>
             ${chapter.lessons.map((lesson, lIndex) => `
                 <tr class="border-b border-slate-100 hover:bg-slate-50 transition-all">
-                    <td class="py-4 px-8 font-medium text-slate-700">
-                        <div class="flex items-center gap-2">
+                    <td class="py-2 sm:py-4 px-4 sm:px-8 font-medium text-slate-700 text-xs sm:text-sm">
+                        <div class="flex items-center gap-1 sm:gap-2 teacher-lesson-title">
                             <span class="text-slate-300">└</span>
                             ${lesson.title}
                         </div>
                     </td>
-                    <td class="py-4 px-6 text-slate-400 text-xs">Lekcija ${lIndex + 1}</td>
-                    <td class="py-4 px-6 text-right">
-                        <button onclick="app.editLesson(${cIndex}, ${lIndex})" class="text-blue-600 p-2 hover:bg-blue-50 rounded-lg" title="Uredi lekciju"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                        <button onclick="app.deleteLesson(${cIndex}, ${lIndex})" class="text-red-600 p-2 hover:bg-red-50 rounded-lg" title="Obriši lekciju"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    <td class="py-2 sm:py-4 px-3 sm:px-6 text-slate-400 text-xs">Lekcija ${lIndex + 1}</td>
+                    <td class="py-2 sm:py-4 px-3 sm:px-6 text-right">
+                        <div class="teacher-actions">
+                            <button onclick="app.editLesson(${cIndex}, ${lIndex})" class="text-blue-600 p-1 sm:p-2 hover:bg-blue-50 rounded-lg teacher-action-btn" title="Uredi lekciju"><i data-lucide="edit-3" class="w-3 h-3 sm:w-4 sm:h-4"></i></button>
+                            <button onclick="app.deleteLesson(${cIndex}, ${lIndex})" class="text-red-600 p-1 sm:p-2 hover:bg-red-50 rounded-lg teacher-action-btn" title="Obriši lekciju"><i data-lucide="trash-2" class="w-3 h-3 sm:w-4 sm:h-4"></i></button>
+                        </div>
                     </td>
                 </tr>
             `).join('')}
             <tr>
-                <td colspan="3" class="p-4 pl-12">
-                    <button onclick="app.addNewLesson(${cIndex})" class="text-green-600 font-black text-xs uppercase tracking-widest flex items-center gap-2 hover:text-green-700">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        Dodaj lekciju u ovo poglavlje
+                <td colspan="3" class="p-2 sm:p-4 pl-6 sm:pl-12">
+                    <button onclick="app.addNewLesson(${cIndex})" class="text-green-600 font-black text-xs uppercase tracking-widest flex items-center gap-1 sm:gap-2 hover:text-green-700 teacher-add-lesson-btn">
+                        <i data-lucide="plus-circle" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                        <span class="hidden sm:inline">Dodaj lekciju u ovo poglavlje</span>
+                        <span class="sm:hidden">Dodaj lekciju</span>
                     </button>
                 </td>
             </tr>
