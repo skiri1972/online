@@ -197,6 +197,62 @@
             /* Button fixes */
             .btn-primary { padding: 0.75rem 1.5rem !important; font-size: 0.875rem !important; }
             .btn-secondary { padding: 0.75rem 1.5rem !important; font-size: 0.875rem !important; }
+            
+            /* Teacher panel responsive fixes */
+            #view-teacher .teacher-container { 
+                padding: 1rem !important; 
+                border-radius: 1.5rem !important; 
+            }
+            #view-teacher .teacher-header { 
+                flex-direction: column !important; 
+                gap: 1rem !important; 
+                margin-bottom: 2rem !important; 
+            }
+            #view-teacher .teacher-title { 
+                font-size: 1.5rem !important; 
+                text-align: center !important; 
+            }
+            #view-teacher .teacher-actions { 
+                width: 100% !important; 
+                justify-content: center !important; 
+            }
+            #view-teacher .teacher-action-btn { 
+                padding: 0.75rem 1rem !important; 
+                font-size: 0.875rem !important; 
+                border-radius: 1rem !important; 
+            }
+            #view-teacher .teacher-section { 
+                margin-bottom: 2rem !important; 
+            }
+            #view-teacher .teacher-section-title { 
+                font-size: 1.25rem !important; 
+                margin-bottom: 1rem !important; 
+                gap: 0.5rem !important; 
+            }
+            #view-teacher .teacher-section-icon { 
+                width: 1.25rem !important; 
+                height: 1.25rem !important; 
+            }
+            #view-teacher .teacher-section-content { 
+                padding: 1rem !important; 
+                border-radius: 1rem !important; 
+            }
+            #view-teacher .teacher-table { 
+                font-size: 0.875rem !important; 
+            }
+            #view-teacher .teacher-table th { 
+                font-size: 0.75rem !important; 
+                padding: 0.5rem 0.25rem !important; 
+            }
+            #view-teacher .teacher-table td { 
+                padding: 0.75rem 0.25rem !important; 
+            }
+            #view-teacher .teacher-table-btn { 
+                padding: 0.5rem 0.75rem !important; 
+                font-size: 0.75rem !important; 
+                border-radius: 0.5rem !important; 
+                margin: 0.125rem !important; 
+            }
         }
         
         @media (max-width: 375px) {
@@ -364,24 +420,25 @@
 
         <!-- View: Teacher Panel -->
         <div id="view-teacher" class="view hidden">
-            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-2xl p-12">
-                <div class="flex justify-between items-center mb-12">
-                    <h2 class="text-4xl font-black text-slate-900 tracking-tight">Administracija</h2>
-                    <div class="flex gap-4">
-                        <button onclick="app.exportToWord()" class="text-blue-600 border border-blue-200 px-6 py-3 rounded-2xl font-bold hover:bg-blue-50 transition-all flex items-center gap-3">
-                            <i data-lucide="file-text"></i>
-                            Izvezi Word
+            <div class="bg-white rounded-[3rem] border border-slate-200 shadow-2xl p-4 sm:p-12 teacher-container">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-12 teacher-header">
+                    <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight teacher-title">Administracija</h2>
+                    <div class="flex gap-2 sm:gap-4 teacher-actions">
+                        <button onclick="app.exportToWord()" class="text-blue-600 border border-blue-200 px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold hover:bg-blue-50 transition-all flex items-center gap-2 teacher-action-btn">
+                            <i data-lucide="file-text" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <span class="hidden sm:inline">Izvezi Word</span>
+                            <span class="sm:hidden">Word</span>
                         </button>
                     </div>
                 </div>
                 
                 <!-- Student Requests Section -->
-                <div class="mb-12">
-                    <h3 class="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                        <i data-lucide="users" class="text-blue-600"></i>
+                <div class="mb-8 sm:mb-12 teacher-section">
+                    <h3 class="text-lg sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center gap-2 teacher-section-title">
+                        <i data-lucide="users" class="text-blue-600 w-5 h-5 teacher-section-icon"></i>
                         Zahtevi za pristup
                     </h3>
-                    <div class="bg-slate-50 rounded-2xl border-2 border-slate-100 p-6">
+                    <div class="bg-slate-50 rounded-xl sm:rounded-2xl border-2 border-slate-100 p-4 sm:p-6 teacher-section-content">
                         <div id="student-requests-container">
                             <!-- Student requests will be injected here -->
                         </div>
@@ -389,12 +446,12 @@
                 </div>
                 
                 <!-- Approved Students Section -->
-                <div class="mb-12">
-                    <h3 class="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                        <i data-lucide="user-check" class="text-green-600"></i>
+                <div class="mb-8 sm:mb-12 teacher-section">
+                    <h3 class="text-lg sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6 flex items-center gap-2 teacher-section-title">
+                        <i data-lucide="user-check" class="text-green-600 w-5 h-5 teacher-section-icon"></i>
                         Odobreni učenici
                     </h3>
-                    <div class="bg-green-50 rounded-2xl border-2 border-green-100 p-6">
+                    <div class="bg-green-50 rounded-xl sm:rounded-2xl border-2 border-green-100 p-4 sm:p-6 teacher-section-content">
                         <div id="approved-students-container">
                             <!-- Approved students will be injected here -->
                         </div>
@@ -402,12 +459,12 @@
                 </div>
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left">
+                    <table class="w-full text-left teacher-table">
                         <thead>
                             <tr class="border-b border-slate-200 text-slate-400 text-xs uppercase tracking-[0.2em]">
-                                <th class="pb-6 font-black">Naslov lekcije</th>
-                                <th class="pb-6 font-black">Redosled</th>
-                                <th class="pb-6 font-black">Akcije</th>
+                                <th class="pb-3 sm:pb-6 font-black">Naslov lekcije</th>
+                                <th class="pb-3 sm:pb-6 font-black hidden sm:table-cell">Redosled</th>
+                                <th class="pb-3 sm:pb-6 font-black">Akcije</th>
                             </tr>
                         </thead>
                         <tbody id="teacher-lessons-table">
@@ -415,8 +472,10 @@
                         </tbody>
                     </table>
                 </div>
-                
-                <!-- Add Chapter Button -->
+            </div>
+        </div>
+
+        <!-- Add Chapter Button -->
                 <div class="mt-8 flex justify-center">
                     <button onclick="app.addNewChapter()" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all flex items-center gap-3 shadow-lg shadow-blue-100">
                         <i data-lucide="book-open"></i>
